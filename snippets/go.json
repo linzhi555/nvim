@@ -1,0 +1,38 @@
+{
+    "Error Check": {
+        "prefix": "err",
+        "body": [
+            "if err != nil {",
+            "    return err",
+            "}"
+        ],
+        "description": "Standard error checking pattern"
+    },
+    "Error Check with Log": {
+        "prefix": "errlog",
+        "body": [
+            "if err != nil {",
+            "    log.Fatalf(\"%v\", err)",
+            "}"
+        ],
+        "description": "Error checking with logging"
+    },
+    "Error Check with Custom Message": {
+        "prefix": "errmsg",
+        "body": [
+            "if err != nil {",
+            "    return fmt.Errorf(\"${1:custom message}: %w\", err)",
+            "}"
+        ],
+        "description": "Error checking with a custom message"
+    },
+    "Panic on Error": {
+        "prefix": "panic",
+        "body": [
+            "if err != nil {",
+            "    panic(err)",
+            "}"
+        ],
+        "description": "Panic on encountering an error"
+    }
+}
