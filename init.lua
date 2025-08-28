@@ -50,7 +50,6 @@ filetype plugin indent on   " 文件类型检测+插件+自动缩进
 " ====================
 " 界面优化
 " ====================
-colorscheme evening
 set guifont=Consolas:h10    " 字体设置（推荐 Cascadia Code/Monaco/Consolas）
 set number                  " 显示行号
 set hlsearch
@@ -85,6 +84,16 @@ nnoremap <space>p :bp<cr>
 ]]
 
 -- Bootstrap lazy.nvim
+--
+
+vim.cmd [[colorscheme vim]]
+vim.api.nvim_set_hl(0, "Pmenu", { bg = "#004100", fg = "#FFFFFF" })
+vim.api.nvim_set_hl(0, "PmenuSel", { bg = "#101010", fg = "#FFFFFF" })
+vim.api.nvim_set_hl(0, "Visual", { bg = "#404040" })
+vim.api.nvim_set_hl(0, "Folded", { bg = "#404040" })
+vim.api.nvim_set_hl(0, "Folded", { bg = "#404040" })
+vim.api.nvim_set_hl(0, "StatusLine", { bg = "#414141", fg = "#FFFFFF" })
+
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
