@@ -95,6 +95,11 @@ vim.api.nvim_set_hl(0, "Folded", { bg = "#404040" })
 vim.api.nvim_set_hl(0, "StatusLine", { bg = "#414141", fg = "#FFFFFF" })
 
 
+-- split window setting
+vim.o.splitright = true
+vim.o.splitbelow = true
+
+
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   local lazyrepo = "https://github.com/folke/lazy.nvim.git"
@@ -228,12 +233,12 @@ function init_cmp()
 
     cmp.setup({
 
-        snippet = {
-          -- REQUIRED - you must specify a snippet engine
-          expand = function(args)
-            vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-          end,
-        },
+        --snippet = {
+        --  -- REQUIRED - you must specify a snippet engine
+        --  expand = function(args)
+        --    vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+        --  end,
+        --},
         --completion = {
         --    autocomplete = false,
         --},
@@ -271,7 +276,7 @@ function init_cmp()
             end, { "i", "s" }),
         }),
         sources = cmp.config.sources({
-            --{ name = 'vsnip' },
+            { name = 'vsnip' },
             { name = "nvim_lsp" },
             { name = "buffer" },
             { name = "path" },
@@ -303,7 +308,7 @@ require("lazy").setup({
 
     {
         'hrsh7th/nvim-cmp',
-        dependencies = { 'hrsh7th/cmp-nvim-lsp' , "hrsh7th/cmp-buffer", 'hrsh7th/cmp-path' },
+        dependencies = { 'hrsh7th/cmp-nvim-lsp' , "hrsh7th/cmp-buffer", 'hrsh7th/cmp-path', 'hrsh7th/cmp-vsnip' },
         config = function()
             init_cmp()
         end
