@@ -83,8 +83,8 @@ nnoremap <space>n :bn<cr>
 nnoremap <space>p :bp<cr>
 ]]
 
--- Bootstrap lazy.nvim
---
+
+-- lua common config
 
 vim.cmd [[colorscheme vim]]
 vim.api.nvim_set_hl(0, "Pmenu", { bg = "#004100", fg = "#FFFFFF" })
@@ -98,6 +98,11 @@ vim.api.nvim_set_hl(0, "StatusLine", { bg = "#414141", fg = "#FFFFFF" })
 -- split window setting
 vim.o.splitright = true
 vim.o.splitbelow = true
+
+
+if vim.fn.has('unix') == 1 then
+    vim.keymap.set("n", "<space>c", ":e ~/.config/nvim/init.lua")
+end
 
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -173,7 +178,7 @@ function init_lsp()
 
     function setup_clangd()
         nvim_lsp.clangd.setup {
-            cmd = { "clangd", "--query-driver=/usr/bin/c++", "--background-index=true" },
+            cmd = { "clangd", "--query-driver=/usr/bin/c++", "--background-index=false"},
             on_attach = on_attach,
             capabilities = capabilities,
             root_dir = nvim_lsp.util.root_pattern('.clangd')
@@ -317,6 +322,20 @@ require("lazy").setup({
 
     {
         "ibhagwan/fzf-lua",
+        config = function()
+            vim.api.nvim_set_keymap('n', '<space>p',
+                ":FzfLua files <CR>",
+                { noremap = true, silent = true })
+
+            vim.api.nvim_set_keymap('n', '<space>s',
+                ":FzfLua grep <CR>",
+                { noremap = true, silent = true })
+
+
+            vim.api.nvim_set_keymap('n', '<space>b',
+                ":FzfLua buffers<CR>",
+                { noremap = true, silent = true })
+        end,
         opts = {}
     },
 
