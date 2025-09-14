@@ -107,18 +107,18 @@ end
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
-  local lazyrepo = "https://github.com/folke/lazy.nvim.git"
-  local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+    local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+    local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
 
-  if vim.v.shell_error ~= 0 then
-    vim.api.nvim_echo({
-      { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-      { out, "WarningMsg" },
-      { "\nPress any key to exit..." },
-    }, true, {})
-    vim.fn.getchar()
-    os.exit(1)
-  end
+    if vim.v.shell_error ~= 0 then
+        vim.api.nvim_echo({
+            { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+            { out,                            "WarningMsg" },
+            { "\nPress any key to exit..." },
+        }, true, {})
+        vim.fn.getchar()
+        os.exit(1)
+    end
 end
 vim.opt.rtp:prepend(lazypath)
 
@@ -178,7 +178,7 @@ function init_lsp()
 
     function setup_clangd()
         nvim_lsp.clangd.setup {
-            cmd = { "clangd", "--query-driver=/usr/bin/c++", "--background-index=false"},
+            cmd = { "clangd", "--query-driver=/usr/bin/c++", "--background-index=false" },
             on_attach = on_attach,
             capabilities = capabilities,
             root_dir = nvim_lsp.util.root_pattern('.clangd')
@@ -228,26 +228,22 @@ function init_lsp()
         },
 
     })
-
 end
 
-
 function init_cmp()
-
     local cmp = require("cmp")
 
     cmp.setup({
-
-        --snippet = {
-        --  -- REQUIRED - you must specify a snippet engine
-        --  expand = function(args)
-        --    vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-        --  end,
-        --},
+        snippet = {
+            -- REQUIRED - you must specify a snippet engine
+            expand = function(args)
+                vim.snippet.expand(args.body) -- For native neovim snippets (Neovim v0.10+)
+            end,
+        },
         --completion = {
         --    autocomplete = false,
         --},
-        preselect = cmp.PreselectMode.None ,
+        preselect = cmp.PreselectMode.None,
         mapping = cmp.mapping.preset.insert({
             ["<C-p>"] = cmp.mapping.select_prev_item(),
             ["<C-n>"] = cmp.mapping.select_next_item(),
@@ -287,10 +283,7 @@ function init_cmp()
             { name = "path" },
         }),
     })
-
 end
-
-
 
 -- Setup lazy.nvim
 require("lazy").setup({
@@ -313,7 +306,7 @@ require("lazy").setup({
 
     {
         'hrsh7th/nvim-cmp',
-        dependencies = { 'hrsh7th/cmp-nvim-lsp' , "hrsh7th/cmp-buffer", 'hrsh7th/cmp-path', 'hrsh7th/cmp-vsnip' },
+        dependencies = { 'hrsh7th/cmp-nvim-lsp', "hrsh7th/cmp-buffer", 'hrsh7th/cmp-path', 'hrsh7th/cmp-vsnip' },
         config = function()
             init_cmp()
         end
@@ -364,5 +357,3 @@ require("lazy").setup({
 
 
 })
-
-
